@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour
 
     private float spawnDelay = 1.0f;
 
+    [SerializeField] protected GameManager gameManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -18,13 +20,13 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       // Debug.Log(gameManager.IsGameOver());
     }
 
 
     IEnumerator SpawnTarget()
     {
-        while(true)
+        while(gameManager.IsGameOver() == false)
         {
             yield return new WaitForSeconds(spawnDelay);
             int targetIndex = Random.Range(0, targets.Count);

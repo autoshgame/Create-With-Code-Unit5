@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +12,10 @@ public class GameManager : MonoBehaviour
     private int score;
 
     [SerializeField] TextMeshProUGUI scoreText;
+
+    [SerializeField] protected bool isGameOver;
+
+    [SerializeField] protected Button restartButton;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +27,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(isGameOver)
+        {
+            GameOver();
+        }
     }
 
 
@@ -29,5 +38,24 @@ public class GameManager : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = "Score : " + score.ToString();
+    }
+
+
+    public bool IsGameOver()
+    {
+        return isGameOver;
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        restartButton.gameObject.SetActive(true);
+    }
+    
+
+    public void startGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        isGameOver = false;
     }
 }
