@@ -29,16 +29,19 @@ public class Target : MonoBehaviour
         outOfBound();
     }
     
+    
     public Vector3 RandomPosition()
     {
         return new Vector3(Random.Range(-4, 4), -2, 0);
     }
 
+    
     public Vector3 RandomTorque()
     {
         return new Vector3(Random.value, Random.value, Random.value);
     }
 
+   
     public Vector3 RandomForce()
     {
         return Vector3.up * Random.Range(12, 16);
