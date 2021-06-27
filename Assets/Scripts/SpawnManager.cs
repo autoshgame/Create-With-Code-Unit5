@@ -14,8 +14,9 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnTarget());
+        
     }
+
 
     // Update is called once per frame
     void Update()
@@ -24,14 +25,20 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    IEnumerator SpawnTarget()
+    IEnumerator SpawnTarget(float difficulty)
     {
         while(gameManager.IsGameOver() == false)
         {
-            yield return new WaitForSeconds(spawnDelay);
+            yield return new WaitForSeconds(spawnDelay/difficulty);
             int targetIndex = Random.Range(0, targets.Count);
             Instantiate(targets[targetIndex], targets[targetIndex].transform.position, targets[targetIndex].transform.rotation );
         }
+    }
+
+
+    public void StartSpawning(float difficulty)
+    {
+        StartCoroutine(SpawnTarget(difficulty));
     }
 
 }

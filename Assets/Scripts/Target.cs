@@ -12,6 +12,12 @@ public class Target : MonoBehaviour
 
     [SerializeField] protected ParticleSystem explosionParticle;
 
+    [SerializeField] protected AudioClip clickSound;
+
+    [SerializeField] protected AudioSource getAudioSource;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +27,7 @@ public class Target : MonoBehaviour
         targetRB.AddTorque(RandomTorque(), ForceMode.Impulse);
         this.transform.position = RandomPosition();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        getAudioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -53,6 +60,7 @@ public class Target : MonoBehaviour
         if (this.transform.position.y <= -3f)
         {
             Destroy(this.gameObject);
+            gameManager.GameOver();
         }
     }
 
@@ -63,7 +71,9 @@ public class Target : MonoBehaviour
         {
             Destroy(this.gameObject);
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            getAudioSource.PlayOneShot(clickSound, 1f);
             gameManager.UpdateScore(pointValue);
+            Debug.Log("Clicked");
         }    
     }
 }

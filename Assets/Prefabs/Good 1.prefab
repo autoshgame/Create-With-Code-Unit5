@@ -128,3 +128,5 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   explosionParticle: {fileID: 7303472089845130122, guid: 6cbc21f5e9162483993a2b84b14d5ac8,
     type: 3}
+  clickSound: {fileID: 8300000, guid: e4a03a87863a33b44b66548c0d8ca3e5, type: 3}
+  getAudioSource: {fileID: 0}
