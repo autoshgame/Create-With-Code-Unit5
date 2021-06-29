@@ -57,10 +57,14 @@ public class Target : MonoBehaviour
 
     public void outOfBound()
     {
-        if (this.transform.position.y <= -3f)
+        if (gameManager.Lives == 0)
+        {
+            gameManager.GameOver();
+        }
+        else if (gameManager.Lives > 0 && this.transform.position.y <= -3f)
         {
             Destroy(this.gameObject);
-            gameManager.GameOver();
+            gameManager.decreaseLives();
         }
     }
 
@@ -73,7 +77,7 @@ public class Target : MonoBehaviour
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             getAudioSource.PlayOneShot(clickSound, 1f);
             gameManager.UpdateScore(pointValue);
-            Debug.Log("Clicked");
+            //Debug.Log("Clicked");
         }    
     }
 }
