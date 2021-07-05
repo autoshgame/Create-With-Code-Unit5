@@ -69,7 +69,7 @@ public class Target : MonoBehaviour
     }
 
 
-    public void OnMouseDown()
+    public void OnMouseEnter()
     {
         if (!gameManager.IsGameOver())
         {

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameManagerX : MonoBehaviour
 {
+    [SerializeField] protected TextMeshProUGUI timerText;
+    private int timer = 60;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
@@ -23,22 +25,24 @@ public class GameManagerX : MonoBehaviour
     private float minValueY = -3.75f; //  y value of the center of the bottom-most square
     
     // Start the game, remove title screen, reset score, and adjust spawnRate based on difficulty button clicked
-    public void StartGame()
+    public void StartGame(float difficulties)
     {
         spawnRate /= 5;
         isGameActive = true;
-        StartCoroutine(SpawnTarget());
+        StartCoroutine(SpawnTarget(difficulties));
         score = 0;
         UpdateScore(0);
         titleScreen.SetActive(false);
+        StartCoroutine(Timer());
+        timerText.text = "Time: " + timer;
     }
 
     // While game is active spawn a random target
-    IEnumerator SpawnTarget()
+    IEnumerator SpawnTarget(float difficulties)
     {
         while (isGameActive)
         {
-            yield return new WaitForSeconds(spawnRate);
+            yield return new WaitForSeconds(difficulties);
             int index = Random.Range(0, targetPrefabs.Count);
 
             if (isGameActive)
@@ -46,6 +50,25 @@ public class GameManagerX : MonoBehaviour
                 Instantiate(targetPrefabs[index], RandomSpawnPosition(), targetPrefabs[index].transform.rotation);
             }
             
+        }
+    }
+
+
+    IEnumerator Timer()
+    {
+        while (isGameActive)
+        {
+            yield return new WaitForSeconds(1);
+            // If statement only used so timer doesn't tick once more after game over
+            if (isGameActive)
+            {
+                timer--;
+                timerText.text = "Time: " + timer;
+            }
+            if (timer < 0)
+            {
+                GameOver();
+            }
         }
     }
 
@@ -70,14 +93,14 @@ public class GameManagerX : MonoBehaviour
     public void UpdateScore(int scoreToAdd)
     {
         score += scoreToAdd;
-        scoreText.text = "score";
+        scoreText.text = "score" + score.ToString();
     }
 
     // Stop game, bring up game over text and restart button
     public void GameOver()
     {
         gameOverText.gameObject.SetActive(true);
-        restartButton.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(true);
         isGameActive = false;
     }
 
