@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -117,7 +119,11 @@ public class GameManager : MonoBehaviour
 
     public void ExitApplication()
     {
-        Application.Quit();
+        if (Application.isPlaying)
+        {
+            Application.Quit();
+        }
+
     }
 
 
